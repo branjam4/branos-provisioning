@@ -1,0 +1,73 @@
+#+TITLE: BranOS
+
+Provisioning my custom guix virtual machine for testing emacs28 inside EXWM.
+* Flow
+This script clones [[https://github.com/branjam4/guix-bigspec][scheme manifests]] which install emacs 28
+(https://github.com/flatwhatson/guix-channel) along with packages I want to use
+with emacs. Then, I clone [[https://github.com/hlissner/doom-emacs][doom]], [[https://github.com/plexus/chemacs][chemacs]], [[https://github.com/branjam4/doom-config][my emacs 28 doom config]], and [[https://github.com/branjam4/exwm-doom-config][my exwm
+config]]. I make some modifications to =~/.bashrc= and create symlinks for
+chemacs. Then I install doom for the emacs ran by [[https://github.com/ch11ng/exwm][Emacs X Window Manager]] (emacs
+27 in my case).
+
+Installing doom with emacs 28 wasn't stable when I made these scripts, so
+there's just a friendly statement at the end reminding the user to run doom's
+install command manually, and multiple times if necessary.
+* Warnings
+** Do not try this at home
+This script is public so people working with it can clone it without
+credentials on their copy of the virtual machine. I do /not/ recommend running
+it in any case outside of its intended one: demonstrating how to provision my
+personal guix system image to run emacs 28 inside a running EXWM.
+
+This script is mostly idempotent with respect to that use case. But =.bashrc=
+gets altered and \.emacs.d gets moved without warning--not very kind side
+effects.
+** Not for the faint of heart
+Running this script in the VM requires 2, if not 4 GB of memory on the VM, along
+with ~40GB of space available on its drive.
+
+It will also take a while to build dependencies, both in guix's case and in
+doom's case. The positive spin here is that because packages installed with guix
+"work on my machine" they will work on your version of my machine too, as I've
+pinned them in a =channel-specs.scm= file in my emacs manifest repo. I have not
+yet gotten around to freezing doom, but that is straightforward in the event
+future doom updates change current functionality.
+* Instructions
+I run the following inside the vm:
+#+begin_src bash
+git clone https://github.com/branjam4/branos-provisioning ~/branos-provisioning
+chmod +777 doom-install.sh
+./doom-install.sh 2>&1 | tee install-logs.org
+
+# optional
+popd
+#+end_src
+
+Both guix and doom are quite verbose by default, so I have the logs in an org
+file so I can look at them later in emacs (thanks to
+https://github.com/mengwong/git-scrape for the tip on making scripts org-mode
+friendly!).
+* Results
+Regardless of whether you run this, my virtual machine image boots straight into
+a vanilla emacs 27 exwm instance.
+
+By the end of the script's execution you should have:
+1. emacs 28 along with dependencies for doom emacs, in a =main-emacs= guix
+   profile.
+2. chemacs, with a preconfigured =.emacs.profiles.el= symlinked to where chemacs
+   expects it.
+3. A doom installation for the "default" EXWM emacs (may only work after
+   closing/restarting EXWM. It will immediately reopen after you exit).
+4. =~/.bashrc= snippets which ensure you can use ~M-x shell~ in EXWM, run
+   ~emacs~, and have it run a separate version of emacs and doom. See below
+   though.
+* Do this next!
+Make sure to actually install doom on emacs28! I have not yet automated this.
+#+begin_src bash
+"~/doom-emacs/bin/doom -y install
+#+end_src
+
+At this point, Doom Emacs fully takes over scripting. However, async jobs might
+stay at a large number for too long (e.g. ="Waiting for 1422 async jobs"=). I
+had to play it by ear, but if it isn't making progress, stop the process (~C-c
+C-c~) and run it again.

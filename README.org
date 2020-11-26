@@ -24,7 +24,7 @@ gets altered and \.emacs.d gets moved without warning--not very kind side
 effects.
 ** Not for the faint of heart
 Running this script in the VM requires 2, if not 4 GB of memory on the VM, along
-with ~40GB of space available on its drive.
+with ~30GB of space available on its drive.
 
 It will also take a while to build dependencies, both in guix's case and in
 doom's case. The positive spin here is that because packages installed with guix
@@ -36,6 +36,7 @@ future doom updates change current functionality.
 I run the following inside the vm:
 #+begin_src bash
 git clone https://github.com/branjam4/branos-provisioning ~/branos-provisioning
+pushd ~/branos-provisioning
 chmod +777 doom-install.sh
 ./doom-install.sh 2>&1 | tee install-logs.org
 
@@ -64,10 +65,10 @@ By the end of the script's execution you should have:
 * Do this next!
 Make sure to actually install doom on emacs28! I have not yet automated this.
 #+begin_src bash
-"~/doom-emacs/bin/doom -y install
+~/doom-emacs/bin/doom -y install
 #+end_src
 
 At this point, Doom Emacs fully takes over scripting. However, async jobs might
-stay at a large number for too long (e.g. ="Waiting for 1422 async jobs"=). I
+stay at a large number for too long (e.g. =Waiting for 1422 async jobs=). I
 had to play it by ear, but if it isn't making progress, stop the process (~C-c
 C-c~) and run it again.

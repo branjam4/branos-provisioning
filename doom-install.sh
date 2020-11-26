@@ -34,7 +34,7 @@ popd || return
 printf "* clone exwm config\n#+BEGIN_EXAMPLE"
 printf "Cloning my configuration for exwm-doom in =~/.exwm-doom.d=..."
 [ ! -e "$HOME/.exwm-doom.d" ] \
-    && git clone https://github.com/branjam4/doom-config.git ~/.exwm-doom.d
+    && git clone https://github.com/branjam4/exwm-doom-config.git ~/.exwm-doom.d
 printf "** symlink =.emacs-profiles.el= to =~/.emacs-profiles.el="
 
 printf "#+END_EXAMPLE\n* install doom on emacs 27\n#+BEGIN_EXAMPLE"
@@ -43,7 +43,7 @@ PATH=/run/current-system/profile/bin:$PATH
 DOOMDIR="$HOME"/.exwm-doom.d
 "$HOME"/.emacs.d/bin/doom -y install
 
-printf "#+END_EXAMPLE\n*# my doom config\n#+BEGIN_EXAMPLE"
+printf "#+END_EXAMPLE\n* my doom config for emacs 28\n#+BEGIN_EXAMPLE"
 [ ! -e "$HOME/.doom.d" ] \
     && git clone https://github.com/branjam4/doom-config.git ~/.doom.d
 export PATH="$HOME"/.guix-extra-profiles/main-emacs/main-emacs/bin
@@ -54,7 +54,7 @@ if ! grep -qF "alias emacs='emacs --with-profile doom28'" "$HOME/.bashrc"; then
     printf "alias emacs='emacs --with-profile doom28'" >> "$HOME/.bashrc"
 fi
 
-printf "#+END_EXAMPLE\n* give next steps"
+printf "#+END_EXAMPLE\n* give next steps for installing doom on emacs 28"
 printf "Finished! Run =\"~/doom-emacs/bin/doom -y install\"= to install emacs 28."
 printf "/(note: may need to run the command multiple times if async silently fails.)/"
 

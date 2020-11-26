@@ -22,6 +22,7 @@ popd || return
 
 printf "#+END_EXAMPLE\n* clear =.emacs.d=, replace with doom install\n"
 printf "#+BEGIN_EXAMPLE\nRemoving ~/.emacs.d\n"
+rm -rf ~/.emacs.d.old
 mv ~/.emacs.d ~/.emacs.d.old
 printf "using a git worktree to put an exwm-specific doom in =~/.emacs.d=...\n"
 [ ! -e "$HOME/doom-emacs" ] && git clone https://github.com/hlissner/doom-emacs.git
@@ -35,9 +36,9 @@ printf "* clone exwm config\n#+BEGIN_EXAMPLE\n"
 printf "Cloning my configuration for exwm-doom in =~/.exwm-doom.d=...\n"
 [ ! -e "$HOME/.exwm-doom.d" ] \
     && git clone https://github.com/branjam4/exwm-doom-config.git ~/.exwm-doom.d
-printf "** symlink =.emacs-profiles.el= to =~/.emacs-profiles.el=\n"
+printf "#+END_EXAMPLE\n** symlink =.emacs-profiles.el= to =~/.emacs-profiles.el=\n"
 
-printf "#+END_EXAMPLE\n* install doom on emacs 27\n#+BEGIN_EXAMPLE\n"
+printf "* install doom on emacs 27\n#+BEGIN_EXAMPLE\n"
 ln -sf .emacs-profiles.el "$HOME"/.emacs-profiles.el
 PATH=/run/current-system/profile/bin:$PATH
 DOOMDIR="$HOME"/.exwm-doom.d

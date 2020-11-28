@@ -53,7 +53,7 @@ export DOOMDIR="$HOME"/.doom.d
 
 printf "#+END_EXAMPLE\n* use alias to ensure emacs 28 will load from a shell spawned in emacs 27\n#+BEGIN_EXAMPLE\n"
 if ! grep -qF "alias emacs='emacs --with-profile doom28'" "$HOME/.bashrc"; then
-    printf "alias emacs='emacs --with-profile doom28'" >> "$HOME/.bashrc"
+    printf "alias emacs='emacs --with-profile doom28'\n" >> "$HOME/.bashrc"
 fi
 
 printf "#+END_EXAMPLE\n* give next steps for installing doom on emacs 28\n"
